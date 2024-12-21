@@ -31,7 +31,7 @@ if(isset($_POST['tambah_akun_btn']))
     {
         move_uploaded_file($_FILES['image']['tmp_name'], $path.'/'.$filename);
 
-        redirect("tambahakun.php", "Akun Berhasil Ditambahakan");
+        redirect("daftarakun.php", "Akun Berhasil Ditambahakan");
     }
     else
     {
@@ -81,7 +81,7 @@ else if(isset($_POST['update_akun_btn']))
                  echo "Error deleting old image.";
             }
         }
-        redirect("editakun.php?id=$id_pengguna", "Akun Telah di Update");
+        redirect("daftarakun.php?id=$id_pengguna", "Akun Telah di Update");
      }
      else
      {
@@ -123,35 +123,6 @@ else if(isset($_POST['delete_akun_btn']))
     }
 
 }
-else if (isset($_POST['update_pengaduan_btn'])) {
-    // Mengamankan dan mengambil data dari form
-    $deskripsi = mysqli_real_escape_string($con, $_POST['deskripsi']);
-    $kategori = mysqli_real_escape_string($con, $_POST['kategori']);
-    $id_status = isset($_POST['id_status']) ? mysqli_real_escape_string($con, $_POST['id_status']) : ''; // Periksa apakah id_status ada
-    $id_karyawan = mysqli_real_escape_string($con, $_POST['id_karyawan']);
-    $id_pengaduan = mysqli_real_escape_string($con, $_POST['id_pengaduan']);
-
-    // Query untuk mendapatkan data pengaduan berdasarkan id_pengaduan
-    $pengaduan_query = "SELECT * FROM pengaduan WHERE id_pengaduan='$id_pengaduan'";
-    $pengaduan_query_run = mysqli_query($con, $pengaduan_query);
-
-    // Mengecek apakah query berhasil dan data ditemukan
-    if ($pengaduan_query_run && mysqli_num_rows($pengaduan_query_run) > 0) {
-        $pengaduan_data = mysqli_fetch_array($pengaduan_query_run);
-
-        // Lanjutkan dengan update atau logika lainnya, seperti update data
-        $update_query = "UPDATE pengaduan SET deskripsi='$deskripsi', kategori='$kategori', id_status='$id_status', id_karyawan='$id_karyawan' WHERE id_pengaduan='$id_pengaduan'";
-        $update_query_run = mysqli_query($con, $update_query);
-
-        if ($update_query_run) {
-            echo "Pengaduan berhasil diperbarui!";
-        } else {
-            echo "Gagal memperbarui pengaduan.";
-        }
-    } else {
-        echo "Pengaduan dengan ID $id_pengaduan tidak ditemukan.";
-    }
-}
 else if(isset($_GET['id_pengaduan'])) {
     // Establish database connection (make sure $con is defined)
     $con = mysqli_connect($host, $username, $password, $database); // Your connection details
@@ -169,15 +140,39 @@ else if(isset($_GET['id_pengaduan'])) {
         // Output the image directly
         echo $row['bukti_pengaduan'];
     } else {
-        echo "Image not found";
+        echo "";
     }
-    
-    mysqli_stmt_close($stmt);
-    mysqli_close($con);
-    exit(); // Important to stop further script execution
-} else {
-    echo "No image ID provided";
+   
 }
+
+if (isset($_POST['update_pengaduan_btn'])) {
+    // Ambil data dari form
+    $id_pengaduan = $_POST['id_pengaduan'];
+    $deskripsi = $_POST['deskripsi'];
+    $kategori = $_POST['kategori'];
+    $id_status = $_POST['id_status'];  // Pastikan ini sesuai dengan yang ada di tabel status_pengaduan
+    
+
+    // Escape input untuk keamanan
+    $id_pengaduan = mysqli_real_escape_string($con, $id_pengaduan);
+    $deskripsi = mysqli_real_escape_string($con, $deskripsi);
+    $kategori = mysqli_real_escape_string($con, $kategori);
+    $id_status = mysqli_real_escape_string($con, $id_status);
+    
+
+    // Query update
+    $update_query = "UPDATE pengaduan SET deskripsi='$deskripsi', kategori='$kategori', id_status='$id_status' WHERE id_pengaduan='$id_pengaduan'";
+
+    if (mysqli_query($con, $update_query)) {
+        $_SESSION['message'] = "Data pengaduan berhasil diupdate!";
+        header('Location: daftarpengaduan.php'); // Redirect setelah berhasil
+    } else {
+        $_SESSION['message'] = "Terjadi kesalahan: " . mysqli_error($con);
+        header('Location: index.php'); // Redirect setelah error
+    }
+}
+
+
 
 
 
@@ -190,3 +185,16 @@ $result = $con->query($sql);
 $query = "SELECT * FROM pengaduan ORDER BY dibuat_pada DESC LIMIT 5";
 $hasil = $con->query($query);
 ?>
+
+<?php
+// Query untuk menghitung total pengaduan
+$query_total_pengaduan = "SELECT COUNT(*) as total_pengaduan FROM pengaduan";
+$total_pengaduan = $con->query($query_total_pengaduan);
+$row_pengaduan = $total_pengaduan->fetch_assoc();
+
+// Query untuk menghitung total akun
+$query_total_akun = "SELECT COUNT(*) as total_akun FROM pengguna";
+$total_akun = $con->query($query_total_akun);
+$row_akun = $total_akun->fetch_assoc();
+?>
+

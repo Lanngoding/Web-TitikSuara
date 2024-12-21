@@ -35,7 +35,6 @@
                             <div class="col-md-6">
                             <label class="form-label">Peran:</label>
                                 <select name="peran" class="form-control" required>
-                                    <option value="admin">Admin</option>
                                     <option value="karyawan">Karyawan</option>
                                 </select>
                             </div>

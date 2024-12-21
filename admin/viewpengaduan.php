@@ -40,19 +40,15 @@
                                 <div class="col-md-6">
                                     <label class="form-label">Status</label>
                                     <select name="id_status" class="form-control" required>
-                                        <option value="1" <?= $row['id_status'] == 1 ? 'selected' : '' ?>>Diproses</option>
-                                        <option value="2" <?= $row['id_status'] == 2 ? 'selected' : '' ?>>Ditinjau</option>
+                                        <option value="1" <?= $row['id_status'] == 1 ? 'selected' : '' ?>>Diajukan</option>
+                                        <option value="2" <?= $row['id_status'] == 2 ? 'selected' : '' ?>>Diproses</option>
                                         <option value="3" <?= $row['id_status'] == 3 ? 'selected' : '' ?>>Selesai </option>
                                     </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="">ID Karyawan</label>
-                                    <input type="text" name="id_karyawan" value="<?= $row['id_karyawan'] ?>" class="form-control">
                                 </div>
                                 
                                 <div class="col-md-12">
                                     <label for="">Bukti Pengaduan</label>
-                                    <img src="display_image.php?id_pengaduan=<?= $row['id_pengaduan'] ?>" height="150px" width="150px" alt="Bukti Pengaduan">
+                                    <img src="code.php?id_pengaduan=<?= $row['id_pengaduan'] ?>" height="300px" width="300px" alt="Bukti Pengaduan">
 
                                 </div>
                                 <div class="col-md-12 mt-3">

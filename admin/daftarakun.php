@@ -13,10 +13,6 @@
                     <div class="container-fluid py-1 px-3">
                         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                             <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-                                <div class="input-group input-group-outline me-2">
-                                    <label class="form-label">Cari Akun...</label>
-                                    <input type="text" class="form-control" id="searchInput" onkeyup="searchAccounts()">
-                                </div>
                             </div>
                         </div>
                     </div>

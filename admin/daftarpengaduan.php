@@ -18,8 +18,6 @@
                                 <th>Kategori</th>
                                 <th>Bukti Pengaduan</th>
                                 <th>Status</th>
-                                <th>Id Karyawan</th>
-                                <th>Id Admin</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -42,18 +40,16 @@
                                         </td>
                                         <td> <?= $item['kategori']; ?> </td>
                                         <td>
-                                        <a href="display_image.php?id_pengaduan=<?= $item['id_pengaduan']; ?>" target="_blank">
-                                            <img src="display_image.php?id_pengaduan=<?= $item['id_pengaduan']; ?>" height="100px" width="100px" alt="Bukti Pengaduan">
+                                        <a href="code.php?id_pengaduan=<?= $item['id_pengaduan']; ?>" target="_blank">
+                                            <img src="code.php?id_pengaduan=<?= $item['id_pengaduan']; ?>" height="100px" width="100px" alt="Bukti Pengaduan">
                                         </a> 
                                         </td>
                                         <td> <?= $item['id_status']; ?> </td>
-                                        <td> <?= $item['id_karyawan']; ?> </td>
-                                        <td> <?= $item['id_admin']; ?> </td>
+                                        
                                         <td>
                                             <a href="viewpengaduan.php?id=<?= $item['id_pengaduan']; ?>" class="btn btn-primary">View</a>
                                             <form action="code.php" method="POST">
                                                 <input type="hidden" name="id_pengaduan" value="<?= $item['id_pengaduan']; ?>">
-                                                <button type="submit" class="btn btn-danger" name="delete_akun_btn">Delete</button>
                                             </form>
                                         </td>
                                     </tr>
